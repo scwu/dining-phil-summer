@@ -1,4 +1,7 @@
 # Django settings for diningphil project.
+from mongoengine import *
+
+connect('diningphilosophers')
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -120,6 +123,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'diningphil.visualizations',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

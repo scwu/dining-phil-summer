@@ -16,7 +16,7 @@ import simplejson as json
 import urllib2
 import re
 import gspread
-import datetime
+from datetime import datetime
 
 # from settings.py
 consumer = oauth.Consumer(settings.LINKEDIN_TOKEN, settings.LINKEDIN_SECRET)
@@ -129,7 +129,7 @@ def populate_db(request):
     for student in thirteen[1:]:
         if student[0]:
             name = student[2].strip()
-            timestamp = student[0].strip()
+            timestamp = datetime.strptime(student[0].strip(), '%m/%d/%Y %H:%M:%S')
             position=student[1].strip()
             grad_year = student[3].strip()
             city = student[4].strip()
@@ -137,11 +137,51 @@ def populate_db(request):
             research = student[6].strip()
             co = student[9].strip()
             startup = student[10].strip()
+            s, created = Student.objects.get_or_create(name = name, major = major, grad_year = grad_year, timestamp = timestamp)
+            s_location, created = City.objects.get_or_create(city_name__startswith = city)
+            s.location = s_location
+            s.position = position
             if co != '':
-               url= "http://api.linkedin.com/v1/company-search:(companies:(name,universal-name,status,industries,employee-count-range,locations))?keywords=%s&count=1&start=0" % (co)
-               resp, content = client.request(url, "GET", headers=headers)
-               company = json.loads(content)
-               print company
+                url= "http://api.linkedin.com/v1/company-search:(companies:(name,universal-name,status,industries,employee-count-range,locations))?keywords=%s&count=1&start=0" % (co)
+                resp, content = client.request(url, "GET", headers=headers)
+                company = json.loads(content)
+                try:
+                    companies = company['companies']
+                    co_name = companies['values'][0]['name']
+                    co_type = companies['values'][0]['universalName']
+                    co_size = companies['values'][0]['employeeCountRange']['code']
+                    c = Company(company_name = co_name, company_type = co_type, company_size = co_size)
+                    c.save()
+                    co_industries = companies['values'][0]['industries']['values']
+                    for i in co_industries:
+                        ind, created = Industries.objects.get_or_create(industry= i['name'])
+                        c.industries.add(ind)
+                    c.save()
+                    co_status = companies['values'][0]['status']['name']
+                    c.status = co_status
+                    c.save()
+                    try:
+                        locations = companies['values'][0]['locations']['values']
+                        for l in locations:
+                            postal = l['address']['postalCode']
+                            city = l['address']['city']
+                            loc, created = City.objects.get_or_create(city_name__startswith = city)
+                            if created:
+                                loc.postal_code = postal
+                                loc.save()
+                            c.locations.add(loc)
+                            c.save()
+                    except:
+                        pass
+                    s.company = c
+                    s.save()
+                except:
+                    pass
+            if startup != '':
+                s.startup = startup
+            if research != '':
+                s.research = research
+            s.save()
     return HttpResponse("It worked!")
 
 

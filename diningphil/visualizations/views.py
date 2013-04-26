@@ -137,8 +137,9 @@ def populate_db(request):
             research = student[6].strip()
             co = student[9].strip()
             startup = student[10].strip()
-            s, created = Student.objects.get_or_create(name = name, major = major, grad_year = grad_year, timestamp = timestamp)
-            s_location, created = City.objects.get_or_create(city_name__startswith = city)
+            s, created = Student.objects.get_or_create(name = name, major = major, grad_year = grad_year)
+            s.timestamp = timestamp
+            s_location, created = City.objects.get_or_create(city_name = city)
             s.location = s_location
             s.position = position
             if co != '':
@@ -150,22 +151,20 @@ def populate_db(request):
                     co_name = companies['values'][0]['name']
                     co_type = companies['values'][0]['universalName']
                     co_size = companies['values'][0]['employeeCountRange']['code']
-                    c = Company(company_name = co_name, company_type = co_type, company_size = co_size)
-                    c.save()
+                    c, created = Company.objects.get_or_create(company_name = co_name, company_type = co_type, company_size = co_size)
+                    print c
                     co_industries = companies['values'][0]['industries']['values']
                     for i in co_industries:
                         ind, created = Industries.objects.get_or_create(industry= i['name'])
                         c.industries.add(ind)
-                    c.save()
                     co_status = companies['values'][0]['status']['name']
                     c.status = co_status
-                    c.save()
                     try:
                         locations = companies['values'][0]['locations']['values']
                         for l in locations:
                             postal = l['address']['postalCode']
                             city = l['address']['city']
-                            loc, created = City.objects.get_or_create(city_name__startswith = city)
+                            loc, created = City.objects.get_or_create(city_name = city)
                             if created:
                                 loc.postal_code = postal
                                 loc.save()
@@ -173,7 +172,9 @@ def populate_db(request):
                             c.save()
                     except:
                         pass
-                    s.company = c
+                    c.save()
+                    company_assigned = Company.objects.get(company_name=co_name)
+                    s.company = company_assigned
                     s.save()
                 except:
                     pass

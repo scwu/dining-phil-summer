@@ -9,7 +9,8 @@ urlpatterns = patterns('',
     url(r'^login/?$', 'diningphil.visualizations.views.oauth_login'),
     url(r'^logout/?$', 'diningphil.visualizations.views.oauth_logout'),
     url(r'^login/authenticated/?$', 'diningphil.visualizations.views.oauth_authenticated'),
-    url(r'^$','diningphil.visualizations.views.home'),
+    url(r'^home/?$','diningphil.visualizations.views.home'),
+    url(r'^/?$', 'diningphil.visualizations.views.data'),
     #url(r'^$', 'diningphil.views.home', name='home'),
     # url(r'^diningphil/', include('diningphil.foo.urls')),
 
@@ -18,4 +19,5 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    url(r'media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 )

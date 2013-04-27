@@ -25,6 +25,10 @@ request_token_url = 'https://api.linkedin.com/uas/oauth/requestToken'
 access_token_url = 'https://api.linkedin.com/uas/oauth/accessToken'
 authenticate_url = 'https://www.linkedin.com/uas/oauth/authenticate'
 
+
+# /
+def data(request):
+    return render_to_response('index.html')
 # /login
 def oauth_login(request):
     # Step 0. Get the current hostname and port for the callback
@@ -46,7 +50,7 @@ def oauth_login(request):
     return HttpResponseRedirect(url)
 
 
-# / (requires login)
+# /home (requires login)
 @login_required
 def home(request):
     html = "<html><body>"

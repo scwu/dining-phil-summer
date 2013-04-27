@@ -46,7 +46,7 @@ class Student(models.Model):
     company = models.ForeignKey(Company, blank=True, null=True)
     startup = models.CharField(max_length=200, blank=True, null=True)
     research = models.CharField(max_length=300, blank=True, null=True)
-    timestamp = models.DateTimeField(blank=True, null=True)
+    timestamp = models.DateTimeField()
 
     def __unicode__(self):
         return self.name

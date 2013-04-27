@@ -1,6 +1,7 @@
 # Django settings for diningphil project.
 import sys, os
-
+import os
+DIRNAME = os.path.abspath(os.path.dirname(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -119,9 +120,7 @@ ROOT_URLCONF = 'diningphil.urls'
 WSGI_APPLICATION = 'diningphil.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(DIRNAME, 'templates/'),
 )
 
 INSTALLED_APPS = (

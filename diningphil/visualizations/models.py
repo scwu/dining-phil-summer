@@ -33,9 +33,6 @@ class Company(models.Model):
     def __unicode__(self):
         return self.company_name
 
-    def __unicode__(self):
-        return self.company_name
-
 
 class Student(models.Model):
     name = models.CharField(max_length=300, primary_key=True)

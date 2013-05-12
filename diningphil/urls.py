@@ -6,6 +6,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^_populate_db/', 'diningphil.visualizations.views.populate_db'),
+    (r'^companies/', 'diningphil.visualizations.views.companies'),
+    (r'^students/', 'diningphil.visualizations.views.students'),
     url(r'^login/?$', 'diningphil.visualizations.views.oauth_login'),
     url(r'^logout/?$', 'diningphil.visualizations.views.oauth_logout'),
     url(r'^login/authenticated/?$', 'diningphil.visualizations.views.oauth_authenticated'),

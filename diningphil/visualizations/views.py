@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 
 from models import *
 import diningphil.settings, diningphil.urls
@@ -189,5 +190,10 @@ def populate_db(request):
             s.save()
     return HttpResponse("It worked!")
 
+def companies(request):
+    result  = serializers.serialize("json", Company.objects.all())
+    return HttpResponse(result)
 
-
+def students(request):
+    result = serializers.serialize("json", Student.objects.all())
+    return HttpResponse(result)

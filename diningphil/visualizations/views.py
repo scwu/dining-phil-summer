@@ -1,4 +1,3 @@
-from secretkeys import GMAIL_PASSWORD, GMAIL_USERNAME
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
@@ -7,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-
+from secretkeys import *
 from models import *
 import diningphil.settings, diningphil.urls
 
@@ -157,7 +156,6 @@ def populate_db(request):
                     co_type = companies['values'][0]['universalName']
                     co_size = companies['values'][0]['employeeCountRange']['code']
                     c, created = Company.objects.get_or_create(company_name = co_name, company_type = co_type, company_size = co_size)
-                    print c
                     co_industries = companies['values'][0]['industries']['values']
                     for i in co_industries:
                         ind, created = Industries.objects.get_or_create(industry= i['name'])
@@ -191,7 +189,35 @@ def populate_db(request):
     return HttpResponse("It worked!")
 
 def companies(request):
-    result  = serializers.serialize("json", Company.objects.all())
+    students = Student.objects.all()
+    company_list = {}
+    other_list = {}
+    full_list = []
+    for s in students:
+        if s.company:
+            company = s.company.company_name
+            size = s.company.company_size
+            if company in company_list[size]:
+                count = company_list[size][company] + 1
+                company_list[size][company] = count
+            else:
+                company_list[size][company] = 1
+        elif s.startup:
+            startup = s.startup
+            if startup in other_list['OTHER']:
+                count2 = other_list['OTHER'][startup] + 1
+                other_list['OTHER'][startup] = count2
+            else:
+                other_list['OTHER'][startup] = 1
+        elif research:
+            if research in other_list:
+                count3 = other_list['OTHER'][research] + 1
+                other_list['OTHER'][research] = count3
+            else:
+                other_list['OTHER'][research] = 1
+    full_list.append(other_list)
+    full_list.append(company_list)
+    result = json.dumps(full_list)
     return HttpResponse(result)
 
 
@@ -211,5 +237,4 @@ def students(request):
         temp = [key,value]
         dictlist.append(temp)
     result = json.dumps(dictlist);
-    print result
     return HttpResponse(result)

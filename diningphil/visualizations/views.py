@@ -194,6 +194,22 @@ def companies(request):
     result  = serializers.serialize("json", Company.objects.all())
     return HttpResponse(result)
 
+
 def students(request):
-    result = serializers.serialize("json", Student.objects.all())
+    students = Student.objects.all()
+    dictionary_locations = {}
+    for s in students:
+        city = s.location.city_name
+        if city in dictionary_locations:
+            count = dictionary_locations[city] + 1
+            dictionary_locations[city] = count
+        else:
+            dictionary_locations[city] = 1
+    dictlist = []
+    dictlist.append(['Location', 'Number of Penn Students'])
+    for key, value in dictionary_locations.iteritems():
+        temp = [key,value]
+        dictlist.append(temp)
+    result = json.dumps(dictlist);
+    print result
     return HttpResponse(result)

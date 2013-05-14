@@ -1,0 +1,10 @@
+Django==1.5.1
+distribute==0.6.31
+dj-database-url==0.2.1
+gspread==0.0.15
+gunicorn==0.17.4
+httplib2==0.8
+oauth2==1.5.211
+psycopg2==2.5
+simplejson==3.3.0
+wsgiref==0.1.2

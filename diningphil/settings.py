@@ -1,6 +1,8 @@
 # Django settings for diningphil project.
 import sys, os
 import os
+import dj_database_url
+
 DIRNAME = os.path.abspath(os.path.dirname(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -172,3 +174,8 @@ LOGGING = {
         },
     }
 }
+
+DATABASES['default'] =  dj_database_url.config()
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

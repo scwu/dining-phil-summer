@@ -190,13 +190,14 @@ def populate_db(request):
 
 def companies(request):
     students = Student.objects.all()
-    company_list = {}
-    other_list = {}
+    company_list = {'A' : {}, 'B' : {}, 'C' : {}, 'D' : {}, 'E' : {}, 'F' : {}, 'G' : {}, 'H' : {}, 'I' : {}}
+    other_list = {'OTHER' : {}}
     full_list = []
     for s in students:
         if s.company:
             company = s.company.company_name
             size = s.company.company_size
+            print company
             if company in company_list[size]:
                 count = company_list[size][company] + 1
                 company_list[size][company] = count
@@ -209,7 +210,8 @@ def companies(request):
                 other_list['OTHER'][startup] = count2
             else:
                 other_list['OTHER'][startup] = 1
-        elif research:
+        elif s.research:
+            research = s.research
             if research in other_list:
                 count3 = other_list['OTHER'][research] + 1
                 other_list['OTHER'][research] = count3

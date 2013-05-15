@@ -197,7 +197,6 @@ def companies(request):
         if s.company:
             company = s.company.company_name
             size = s.company.company_size
-            print company
             if company in company_list[size]:
                 count = company_list[size][company] + 1
                 company_list[size][company] = count

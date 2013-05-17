@@ -17,6 +17,7 @@ import urllib2
 import re
 import gspread
 from datetime import datetime
+import itertools
 
 # from settings.py
 consumer = oauth.Consumer(settings.LINKEDIN_TOKEN, settings.LINKEDIN_SECRET)
@@ -272,3 +273,23 @@ def students(request):
         dictlist.append(temp)
     result = json.dumps(dictlist)
     return HttpResponse(result)
+
+def routes(request):
+    companies = Company.objects.all()
+    routes = {}
+    for c in companies:
+        locations = c.locations.all()
+        locations_names = []
+        for names in locations:
+            print names
+            locations_names.append(str(names.city_name))
+        for pair in itertools.combinations(locations_names, 2):
+            if str(pair) in routes:
+                pair = str(pair)
+                count = routes[pair] + 1
+                routes[pair] = count
+            else:
+                pair = str(pair)
+                routes[pair] = 1
+    results = json.dumps(routes)
+    return HttpResponse(results)

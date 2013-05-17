@@ -52,3 +52,40 @@ div.full {
   float: right;
   width: 45%;
 }
+
+text {
+    font-size: 17px;
+    color: white;
+    font-family: 'League Gothic', sans-serif;
+}
+
+#states path {
+  fill: #ccc;
+  stroke: #fff;
+}
+
+path.arc {
+  pointer-events: none;
+  fill: none;
+  stroke: #000;
+  display: none;
+}
+
+path.cell {
+  fill: none;
+  pointer-events: all;
+}
+
+circle {
+  fill: steelblue;
+  fill-opacity: .8;
+  stroke: #fff;
+}
+
+#cells.voronoi path.cell {
+  stroke: brown;
+}
+
+#cells g:hover path.arc {
+  display: inherit;
+}

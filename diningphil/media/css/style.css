@@ -1,9 +1,11 @@
 html, body { 
-  padding: 0;
-  margin: 0;
+  padding: 0px;
+  margin: 0px;
   text-align: center;
-  height: 100%;
+    height: 100%;
+    min-width: 1400px;
 }
+
 @font-face {
     font-family: "League Gothic";
     font-style: normal;
@@ -11,29 +13,17 @@ html, body {
     src: local("League Gothic"), url("http://league-gothic-webfont.googlecode.com/files/LeagueGothic.otf") format("opentype");
 }
 
-div.full {
-  width:100%;
-  height: 100%;
+.full {
   padding: 0;
   margin: 0;
-  min-height: 700px;
-  min-width: 800px;
-}
-
-#full-screen-background-image {
-  z-index: -999;
-  min-height: 100%;
-  min-width: 1024px;
   width: 100%;
-  height: auto;
-  position: fixed;
-  top: 0;
-  left: 0;
-    background-color: #E74C3C;
+  height: 800px;
+  background-color: #E74C3C;
+  min-width: 1400px;
 }
 
 .title {
-  margin-top:0px;
+  margin-top:40px;
   margin-left: 40px;
   font-family: 'League Gothic', sans-serif;
   color: white;
@@ -41,18 +31,80 @@ div.full {
   width: 45%;
   float: left;
 }
+
 .title h1 {
   font-size: 130px;
   letter-spacing: 3px;
 }
 
 .globe {
-  margin-top: 50px;
+  margin-top: 100px;
   margin-right: 40px;
   float: right;
   width: 45%;
 }
 
+.companies-size {
+  min-width: 1400px;
+  padding-top: 50px;
+  background-color: #0099cc;
+  height: 1700px;
+}
+
+.companies-size h1 {
+  font-family: 'League Gothic', sans-serif;
+  color: white;
+  position: relative;
+  font-size: 90px;
+}
+.bubblechart{
+  position: relative;
+  top: -30px;
+}
+
+.legend {
+  margin-top: 50px;
+  position: relative;
+  left: 17%;
+  height: 400px;
+  width: 1000px;
+}
+
+.leg {
+  font-family: 'League Gothic', sans-serif;
+  color: white;
+  letter-spacing: 1.5px;
+  font-size: 20px;
+  padding-left: 9px;
+  padding-right: 9px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: left;
+  height: 20px;
+  display: inline-block;
+}
+
+#states_map {
+  min-width: 1400px;
+  padding-top: 80px;
+  background-color: #E74C3C;
+}
+
+#states_map #footer {
+  position:relative;
+  top: -50px;
+}
+
+#states_map svg {
+  position: relative;
+  top: -90px;
+}
+
+#states_map h1 {
+  font-family: 'League Gothic', sans-serif;
+  color: white;
+  font-size: 90px;
+}
 text, span {
     font-size: 17px;
     color: white;
@@ -102,4 +154,146 @@ circle {
 
 .pie_chart .arc {
   stroke: #fff;
+}
+.size_by_class {
+  min-width: 1400px;
+  padding-top: 50px;
+  background-color: #0099cc;
+  padding-bottom: 20px;
+}
+.size_by_class h1 {
+  font-family: 'League Gothic', sans-serif;
+  color: white;
+  font-size: 90px;
+}
+.pie_chart .legend {
+  position:relative;
+  left: -5%;
+  width: 170px;
+}
+.pie_chart .pie {
+  position: relative;
+  top: -150px;
+}
+.pie text {
+  fill: white;
+  font-size: 30px;
+}
+
+.pie_chart .legend text {
+  font-size: 20px;
+  fill: white;
+}
+
+.industries {
+  min-width: 1400px;
+  top: -60px;
+  padding-top: 50px;
+  position:relative;
+  background-color: #E74C3C;
+}
+.industries h1 {
+  font-family: 'League Gothic', sans-serif;
+  color: white;
+  font-size: 90px;
+}
+
+.industries .graph {
+  fill: white;
+}
+
+.industries .graph text {
+  font-size: 20px;
+  fill: black;
+  font-weight: 200;
+}
+.graph {
+  position: relative;
+  top: -20px;
+}
+.map_bubble h1 {
+  font-family: 'League Gothic', sans-serif;
+  color: white;
+  font-size: 90px;
+}
+.map_bubble {
+  min-width: 1400px;
+  position:relative;
+  top: -60px;
+  background-color: #0099cc;
+  padding-top: 60px;
+  padding-bottom: 120px;
+}
+
+.students {
+  position: relative;
+  top:-60px;
+  padding-top: 60px;
+  min-width: 1400px;
+  background-color: #E74C3C;
+  margin-bottom: -30px;
+}
+.students h1 {
+  font-family: 'League Gothic', sans-serif;
+  color: white;
+  font-size: 90px;
+}
+
+.students .class {
+  vertical-align: top;
+  display: inline-block;
+  width: 340px;
+}
+
+.students .class h2 {
+  padding-bottom: 50px;
+  font-family: 'League Gothic', sans-serif;
+  color: white;
+  font-size: 50px;
+}
+
+.students .class .each {
+  font-family: 'League Gothic', sans-serif;
+  color: white;
+}
+
+.students .class .each h3 {
+  letter-spacing: 1px;
+  font-size: 40px;
+  font-weight: 300;
+}
+
+.students .class .each #major {
+  position: relative;
+  top: -30px;
+  height: 30px;
+  font-size: 25px;
+}
+.students .class .each #name {
+  position: relative;
+  top: -60px;
+  height: 30px;
+  font-size: 30px;
+}
+.foot {
+  position: relative;
+  top: -30px;
+  width: 100%;
+  height: 40px;
+  background-color:  #cc3333;
+}
+
+.foot span {
+  position:relative;
+  top:10px;
+  word-spacing: 4px;
+  font-weight: 200;
+  letter-spacing: 1px;
+}
+
+.foot span a {
+  text-decoration: none;
+  color: white;
+  font-style: italic;
+  letter-spacing: 1px;
 }

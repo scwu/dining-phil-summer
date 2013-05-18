@@ -3,91 +3,126 @@
 {% block content %}
 <div class="full">
   <div class="title">
-      <h1>PENN CS TAKES ON THE WORLD IN SUMMER 2013</h1>
-    </div>
-    <div class="globe">
-      <img src="/media/img/earth.png"/>
-    </div>
-      <div id="full-screen-background-image"></div>
+    <h1>PENN CS TAKES ON THE WORLD IN SUMMER 2013</h1>
   </div>
-  <div id='map_locations'></div>
-  <div class="bubblechart">
+  <div class="globe">
+    <img src="/media/img/earth.png"/>
   </div>
+</div>
+  <div class="companies-size">
+    <h1>PENN REPRESENTING</h1>
+    <div class="bubblechart"></div>
+    <div class="legend">
+      <div style="border-left:20px solid #3182bd;" class="leg">Student Startup</div>
+      <div style="border-left:20px solid #6baed6;" class="leg">Research</div>
+      <div style="border-left:20px solid #9ecae1;" class="leg">1 employee</div>
+      <div style="border-left:20px solid #e6550d;" class="leg">2-10 employees</div>
+      <div style="border-left:20px solid #a7cdc9;" class="leg">11-50 employees</div>
+      <div style="border-left:20px solid #fdae6b;" class="leg">51-200 employees</div>
+      <div style="border-left:20px solid #fd8d3c;" class="leg">201-500 employees</div>
+      <div style="border-left:20px solid #31a354;" class="leg">501-1000 employees</div>
+      <div style="border-left:20px solid #fdd0a2;" class="leg">1001-5000 employees</div>
+      <div style="border-left:20px solid #a1d99b;" class="leg">5001-10000 employees</div>
+      <div style="border-left:20px solid #74c476;" class="leg">10000+ employees</div>
+  </div>
+</div>
 
   <div id="states_map">
+    <h1>CONNECTED COMPANIES<h1>
       <div id="footer">
         <span>Company Locations</span>
         <div class="hint"></div>
       </div>
   </div>
-  <div class="pie_chart"></div>
-  <div class="graph"></div>
+  <div class="size_by_class">
+    <h1>COMPANY TYPE BY CLASS<h1>
+    <div class="pie_chart"></div>
+  </div>
+  <div class="industries">
+    <h1>FORCE WEIGHTED GRAPH FOR THE INDUSTRIES WE'RE WORKING IN</h1>
+    <div class="graph"></div>
+  </div>
+  <div class="map_bubble">
+    <h1>WHERE ARE WE THIS SUMMER?</h1>
+    <div id='map_locations'></div>
+  </div>
   <div class="students">
-    <h1>WHERE IS EVERYONE?</h1>
-    <div class="2016">
+    <h1>WHO ARE WE?</h1>
+    <div id="2016" class="class">
       <h2>CLASS OF 2016</h2>
       {% for s in students.0 %}
         <div class="each">
           <h3>{{ s.name }}<h3>
-          <p>{{ s.major }}<p>
+          <p id="major">{{ s.major }}<p>
             {% if s.startup %}
               <p id="name">Startup: {{ s.startup }}</p>
             {% elif s.research %}
-              <p id-"name">Research: {{ s.research }}</p>
+              <p id="name">Research: {{ s.research }}</p>
             {% elif s.company_id %}
               <p id="name">Company: {{ s.company_id }}</p>
+            {% else %}
+              <p id="name">Other: {{ s.position }}</p>
             {% endif %}
         </div>
       {% endfor %}
     </div>
-    <div class="2015">
+    <div id="2015" class="class">
       <h2>CLASS OF 2015</h2>
       {% for s in students.1 %}
         <div class="each">
           <h3>{{ s.name }}<h3>
-          <p>{{ s.major }}<p>
+          <p id="major">{{ s.major }}<p>
             {% if s.startup %}
               <p id="name">Startup: {{ s.startup }}</p>
             {% elif s.research %}
-              <p id-"name">Research: {{ s.research }}</p>
+              <p id="name">Research: {{ s.research }}</p>
             {% elif s.company_id %}
               <p id="name">Company: {{ s.company_id }}</p>
+            {% else %}
+              <p id="name">Other: {{ s.position }}</p>
             {% endif %}
         </div>
       {% endfor %}
     </div>
-    <div class="2014">
+    <div id="2014" class="class">
       <h2>CLASS OF 2014</h2>
       {% for s in students.2 %}
         <div class="each">
           <h3>{{ s.name }}<h3>
-          <p>{{ s.major }}<p>
+          <p id="major">{{ s.major }}<p>
             {% if s.startup %}
               <p id="name">Startup: {{ s.startup }}</p>
             {% elif s.research %}
-              <p id-"name">Research: {{ s.research }}</p>
+              <p id="name">Research: {{ s.research }}</p>
             {% elif s.company_id %}
               <p id="name">Company: {{ s.company_id }}</p>
+            {% else %}
+              <p id="name">Other: {{ s.position }}</p>
             {% endif %}
         </div>
       {% endfor %}
     </div>
-    <div class="2013">
+    <div id="2013" class="class">
       <h2>CLASS OF 2013</h2>
       {% for s in students.3 %}
         <div class="each">
           <h3>{{ s.name }}<h3>
-          <p>{{ s.major }}<p>
-            {% if s.startup %}
+          <p id="major">{{ s.major }}<p>
+            {% if s.startup and s.startup.strip %}
               <p id="name">Startup: {{ s.startup }}</p>
-            {% elif s.research %}
-              <p id-"name">Research: {{ s.research }}</p>
-            {% elif s.company_id %}
+            {% elif s.research and s.research.strip %}
+              <p id="name">Research: {{ s.research }}</p>
+            {% elif s.company_id and s.company_id.strip %}
               <p id="name">Company: {{ s.company_id }}</p>
+            {% else %}
+              <p id="name">Other: {{ s.position }}</p>
             {% endif %}
         </div>
       {% endfor %}
     </div>
+  </div>
+  <div class="foot">
+    <span>For errors or suggestions - feel free to <a href="mailto:sclarawu@gmail.com">email</a> Clara Wu or <a href="https://www.facebook.com/s.clara.wu">message her on Facebook</a></span>
   </div>
 
 {% endblock content %}

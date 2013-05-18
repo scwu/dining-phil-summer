@@ -34,6 +34,7 @@ function drawBubbles() {
         .attr("dy", ".3em")
         .style("text-anchor", "middle")
         .text(function(d) { return d.className.substring(0, d.r / 3); });
+
   });
   // Returns a flattened hierarchy containing all leaf nodes under the root.
   function classes(root) {
@@ -231,13 +232,13 @@ function drawGraph() {
   });
 
   var width = 960,
-      height = 500;
+      height = 800;
 
   var force = d3.layout.force()
       .nodes(d3.values(nodes))
       .links(links)
       .size([width, height])
-      .linkDistance(60)
+      .linkDistance(80)
       .charge(-300)
       .on("tick", tick)
       .start();
@@ -329,7 +330,7 @@ var json_locations;
         var options = {};
         options['region'] = 'US';
         options['displayMode'] = 'markers';
-        options['backgroundColor'] = '#3498DB';
+        options['backgroundColor'] = '#0099cc';
         options['colorAxis'] =  {colors: ['blue', 'red']}
         options['sizeAxis'] = {minSize:10, maxSize: 60}
         var container = document.getElementById('map_locations');

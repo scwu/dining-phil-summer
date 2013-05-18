@@ -151,69 +151,161 @@ function drawPie() {
   var radius = 130,
     padding = 20;
 
-var color = d3.scale.ordinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#3c7cc3","#ff8c00", "#196522", "#24a594", "#265ca3", "#515252"]);
+  var color = d3.scale.ordinal()
+      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#3c7cc3","#ff8c00", "#196522", "#24a594", "#265ca3", "#515252"]);
 
-var arc = d3.svg.arc()
-    .outerRadius(radius)
-    .innerRadius(radius - 60);
+  var arc = d3.svg.arc()
+      .outerRadius(radius)
+      .innerRadius(radius - 60);
 
-var pie = d3.layout.pie()
-    .sort(null)
-    .value(function(d) { return d.population; });
+  var pie = d3.layout.pie()
+      .sort(null)
+      .value(function(d) { return d.population; });
 
-d3.csv("company_types/", function(error, data) {
-  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Year"; }));
+  d3.csv("company_types/", function(error, data) {
+    color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Year"; }));
 
-  data.forEach(function(d) {
-    d.ages = color.domain().map(function(name) {
-      return {name: name, population: +d[name]};
+    data.forEach(function(d) {
+      d.ages = color.domain().map(function(name) {
+        return {name: name, population: +d[name]};
+      });
     });
+
+    var legend = d3.select(".pie_chart").append("svg")
+        .attr("class", "legend")
+        .attr("width", radius * 1.3)
+        .attr("height", radius * 2)
+      .selectAll("g")
+        .data(color.domain().slice().reverse())
+      .enter().append("g")
+        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+    legend.append("rect")
+        .attr("width", 18)
+        .attr("height", 18)
+        .style("fill", color);
+
+    legend.append("text")
+        .attr("x", 24)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .text(function(d) { return d; });
+
+    var svg = d3.select(".pie_chart").selectAll(".pie")
+        .data(data)
+      .enter().append("svg")
+        .attr("class", "pie")
+        .attr("width", radius * 2)
+        .attr("height", radius * 2)
+      .append("g")
+        .attr("transform", "translate(" + radius + "," + radius + ")");
+
+    svg.selectAll(".arc")
+        .data(function(d) { return pie(d.ages); })
+      .enter().append("path")
+        .attr("class", "arc")
+        .attr("d", arc)
+        .style("fill", function(d) { return color(d.data.name); });
+
+    svg.append("text")
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .text(function(d) { return d.Year; });
+
+  });
+}
+
+function drawGraph() {
+  // get the data
+  d3.csv("/industries/", function(error, links) {
+
+  var nodes = {};
+
+  // Compute the distinct nodes from the links.
+  links.forEach(function(link) {
+      link.source = nodes[link.source] || 
+          (nodes[link.source] = {name: link.source});
+      link.target = nodes[link.target] || 
+          (nodes[link.target] = {name: link.target});
+      link.value = +link.value;
   });
 
-  var legend = d3.select(".pie_chart").append("svg")
-      .attr("class", "legend")
-      .attr("width", radius * 1.3)
-      .attr("height", radius * 2)
-    .selectAll("g")
-      .data(color.domain().slice().reverse())
+  var width = 960,
+      height = 500;
+
+  var force = d3.layout.force()
+      .nodes(d3.values(nodes))
+      .links(links)
+      .size([width, height])
+      .linkDistance(60)
+      .charge(-300)
+      .on("tick", tick)
+      .start();
+
+  var svg = d3.select(".graph").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+  // build the arrow.
+  svg.append("svg:defs").selectAll("marker")
+      .data(["end"])      // Different link/path types can be defined here
+    .enter().append("svg:marker")    // This section adds in the arrows
+      .attr("id", String)
+      .attr("viewBox", "0 -5 10 10")
+      .attr("refX", 15)
+      .attr("refY", -1.5)
+      .attr("markerWidth", 6)
+      .attr("markerHeight", 6)
+      .attr("orient", "auto")
+    .append("svg:path")
+      .attr("d", "M0,-5L10,0L0,5");
+
+  // add the links and the arrows
+  var path = svg.append("svg:g").selectAll("path")
+      .data(force.links())
+    .enter().append("svg:path")
+  //    .attr("class", function(d) { return "link " + d.type; })
+      .attr("class", "link")
+      .attr("marker-end", "url(#end)");
+
+  // define the nodes
+  var node = svg.selectAll(".node")
+      .data(force.nodes())
     .enter().append("g")
-      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+      .attr("class", "node")
+      .call(force.drag);
 
-  legend.append("rect")
-      .attr("width", 18)
-      .attr("height", 18)
-      .style("fill", color);
+  // add the nodes
+  node.append("circle")
+      .attr("r", 5);
 
-  legend.append("text")
-      .attr("x", 24)
-      .attr("y", 9)
+  // add the text 
+  node.append("text")
+      .attr("x", 12)
       .attr("dy", ".35em")
-      .text(function(d) { return d; });
+      .text(function(d) { return d.name; });
 
-  var svg = d3.select(".pie_chart").selectAll(".pie")
-      .data(data)
-    .enter().append("svg")
-      .attr("class", "pie")
-      .attr("width", radius * 2)
-      .attr("height", radius * 2)
-    .append("g")
-      .attr("transform", "translate(" + radius + "," + radius + ")");
+  // add the curvy lines
+  function tick() {
+      path.attr("d", function(d) {
+          var dx = d.target.x - d.source.x,
+              dy = d.target.y - d.source.y,
+              dr = Math.sqrt(dx * dx + dy * dy);
+          return "M" + 
+              d.source.x + "," + 
+              d.source.y + "A" + 
+              dr + "," + dr + " 0 0,1 " + 
+              d.target.x + "," + 
+              d.target.y;
+      });
 
-  svg.selectAll(".arc")
-      .data(function(d) { return pie(d.ages); })
-    .enter().append("path")
-      .attr("class", "arc")
-      .attr("d", arc)
-      .style("fill", function(d) { return color(d.data.name); });
-
-  svg.append("text")
-      .attr("dy", ".35em")
-      .style("text-anchor", "middle")
-      .text(function(d) { return d.Year; });
-
-});
+      node
+          .attr("transform", function(d) { 
+          return "translate(" + d.x + "," + d.y + ")"; });
+    }
+  });
 }
+drawGraph();
 drawPie();
 drawUS();
 drawBubbles();

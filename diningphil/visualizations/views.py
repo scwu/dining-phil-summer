@@ -282,7 +282,6 @@ def routes(request):
         locations = c.locations.all()
         locations_names = []
         for names in locations:
-            print names
             locations_names.append(str(names.city_name))
         for pair in itertools.combinations(locations_names, 2):
             if str(pair) in routes:
@@ -334,4 +333,26 @@ def company_types(request):
                 direct['Other'] += 1
         writer.writerow([direct['Year'], direct['Other'], direct['Startup'], direct['Research'], direct['A'], direct['B'], direct['C'], direct['D'], 
             direct['E'], direct['F'], direct['G'], direct['H'], direct['I']])
+    return response
+
+def industries(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="industries.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['source', 'target', 'value'])
+    companies = Company.objects.all()
+    industries_full = {}
+    for c in companies:
+        industries_p = []
+        industries = c.industries.all()
+        [industries_p.append(str(i['industry'])) for i in industries.values()]
+        for pair in itertools.combinations(industries_p, 2):
+            pair = pair[0] + "," + pair[1]
+            if pair in industries_full:
+                industries_full[pair] += 1
+            else:
+                industries_full[pair] = 1
+    for key in industries_full:
+        first, second = key.split(',')
+        writer.writerow([first,second,industries_full[key]])
     return response

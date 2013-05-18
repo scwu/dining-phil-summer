@@ -48,7 +48,7 @@ html, body {
   min-width: 1400px;
   padding-top: 50px;
   background-color: #0099cc;
-  height: 1700px;
+  padding-bottom: 40px;
 }
 
 .companies-size h1 {
@@ -57,31 +57,17 @@ html, body {
   position: relative;
   font-size: 90px;
 }
+.companies-size h2 {
+  position: relative;
+  top: -40px;
+  font-family: 'League Gothic', sans-serif;
+  color: white;
+  position: relative;
+  font-size: 50px;
+}
 .bubblechart{
   position: relative;
   top: -30px;
-}
-
-.legend {
-  margin-top: 50px;
-  position: relative;
-  left: 17%;
-  height: 400px;
-  width: 1000px;
-}
-
-.leg {
-  font-family: 'League Gothic', sans-serif;
-  color: white;
-  letter-spacing: 1.5px;
-  font-size: 20px;
-  padding-left: 9px;
-  padding-right: 9px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  text-align: left;
-  height: 20px;
-  display: inline-block;
 }
 
 #states_map {

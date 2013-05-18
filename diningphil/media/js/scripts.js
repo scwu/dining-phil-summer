@@ -109,7 +109,7 @@ function drawUS() {
 
     d3.csv("/media/js/airports.csv", function(airports) {
 
-      // Only consider airports with at least one flight.
+      // Only consider cities with one path otherwise dont show them
       airports = airports.filter(function(airport) {
         if (countByAirport[airport.iata]) {
           var location = [+airport.longitude, +airport.latitude];
@@ -119,7 +119,7 @@ function drawUS() {
         }
       });
 
-      // Compute the Voronoi diagram of airports' projected positions.
+      // Compute the Voronoi diagram of cities projected positions.
       var polygons = d3.geom.voronoi(positions);
 
       var g = cells.selectAll("g")
@@ -231,14 +231,14 @@ function drawGraph() {
       link.value = +link.value;
   });
 
-  var width = 960,
+  var width = 1200,
       height = 800;
 
   var force = d3.layout.force()
       .nodes(d3.values(nodes))
       .links(links)
       .size([width, height])
-      .linkDistance(90)
+      .linkDistance(180)
       .charge(-300)
       .on("tick", tick)
       .start();

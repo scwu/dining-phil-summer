@@ -352,12 +352,12 @@ def industries(request):
         industries = c.industries.all()
         [industries_p.append(str(i['industry'])) for i in industries.values()]
         for pair in itertools.combinations(industries_p, 2):
-            pair = pair[0] + "," + pair[1]
+            pair = pair[0] + "-" + pair[1]
             if pair in industries_full:
                 industries_full[pair] += 1
             else:
                 industries_full[pair] = 1
     for key in industries_full:
-        first, second = key.split(',')
+        first, second = key.split('-')
         writer.writerow([first,second,industries_full[key]])
     return response

@@ -53,7 +53,7 @@ div.full {
   width: 45%;
 }
 
-text {
+text, span {
     font-size: 17px;
     color: white;
     font-family: 'League Gothic', sans-serif;
@@ -64,28 +64,42 @@ text {
   stroke: #fff;
 }
 
-path.arc {
+#states_map path.arc {
   pointer-events: none;
   fill: none;
   stroke: #000;
   display: none;
 }
 
-path.cell {
+#states_map path.cell {
   fill: none;
   pointer-events: all;
 }
 
-circle {
+#states_map circle {
   fill: steelblue;
   fill-opacity: .8;
   stroke: #fff;
 }
-
+circle {
+  stroke: #fff;
+}
 #cells.voronoi path.cell {
   stroke: brown;
 }
 
 #cells g:hover path.arc {
   display: inherit;
+}
+
+.pie_chart {
+  font: 10px sans-serif;
+}
+
+.pie_chart svg {
+  padding: 10px 0 0 10px;
+}
+
+.pie_chart .arc {
+  stroke: #fff;
 }

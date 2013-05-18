@@ -18,6 +18,7 @@ import re
 import gspread
 from datetime import datetime
 import itertools
+import csv
 
 # from settings.py
 consumer = oauth.Consumer(settings.LINKEDIN_TOKEN, settings.LINKEDIN_SECRET)
@@ -293,3 +294,44 @@ def routes(request):
                 routes[pair] = 1
     results = json.dumps(routes)
     return HttpResponse(results)
+
+def company_types(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="company_pie.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['Year', 'Other', 'Startup', 'Research', '1 employee', '2-10 employees', '11-50 employees', '51-200 employees', '201-500 employees', '501-1,000 employees', '1,001-5,000 employees', '5,001-10,000 employees', '10,000+ employees'])
+    fresh = Student.objects.filter(grad_year=2016)
+    soph = Student.objects.filter(grad_year=2015)
+    jr = Student.objects.filter(grad_year=2014)
+    sr = Student.objects.filter(grad_year=2013)
+    full = [fresh, soph, jr, sr]
+    for typ in full:
+        direct = {
+                'Year': "", 
+                'Other': 0,
+                'Startup' : 0, 
+                'Research' : 0, 
+                'A' : 0, 
+                'B' : 0, 
+                'C' : 0, 
+                'D' : 0, 
+                'E' : 0, 
+                'F' : 0, 
+                'G' : 0, 
+                'H' : 0, 
+                'I' : 0
+                }
+        for s in typ:
+            direct['Year'] = s.grad_year
+            if s.startup:
+                direct['Startup'] += 1
+            elif s.research:
+                direct['Research'] += 1
+            elif s.company:
+                size = s.company.company_size
+                direct[size] += 1
+            else:
+                direct['Other'] += 1
+        writer.writerow([direct['Year'], direct['Other'], direct['Startup'], direct['Research'], direct['A'], direct['B'], direct['C'], direct['D'], 
+            direct['E'], direct['F'], direct['G'], direct['H'], direct['I']])
+    return response

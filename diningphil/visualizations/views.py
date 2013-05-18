@@ -30,7 +30,12 @@ authenticate_url = 'https://www.linkedin.com/uas/oauth/authenticate'
 
 # /
 def data(request):
-    return render_to_response('index.html')
+    fresh = Student.objects.filter(grad_year=2016).values()
+    soph = Student.objects.filter(grad_year=2015).values()
+    jr = Student.objects.filter(grad_year=2014).values()
+    sr = Student.objects.filter(grad_year=2013).values()
+    full = [fresh, soph, jr, sr]
+    return render_to_response('index.html', {'students' : full})
 # /login
 def oauth_login(request):
     # Step 0. Get the current hostname and port for the callback

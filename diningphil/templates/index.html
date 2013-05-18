@@ -22,5 +22,72 @@
   </div>
   <div class="pie_chart"></div>
   <div class="graph"></div>
+  <div class="students">
+    <h1>WHERE IS EVERYONE?</h1>
+    <div class="2016">
+      <h2>CLASS OF 2016</h2>
+      {% for s in students.0 %}
+        <div class="each">
+          <h3>{{ s.name }}<h3>
+          <p>{{ s.major }}<p>
+            {% if s.startup %}
+              <p id="name">Startup: {{ s.startup }}</p>
+            {% elif s.research %}
+              <p id-"name">Research: {{ s.research }}</p>
+            {% elif s.company_id %}
+              <p id="name">Company: {{ s.company_id }}</p>
+            {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="2015">
+      <h2>CLASS OF 2015</h2>
+      {% for s in students.1 %}
+        <div class="each">
+          <h3>{{ s.name }}<h3>
+          <p>{{ s.major }}<p>
+            {% if s.startup %}
+              <p id="name">Startup: {{ s.startup }}</p>
+            {% elif s.research %}
+              <p id-"name">Research: {{ s.research }}</p>
+            {% elif s.company_id %}
+              <p id="name">Company: {{ s.company_id }}</p>
+            {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="2014">
+      <h2>CLASS OF 2014</h2>
+      {% for s in students.2 %}
+        <div class="each">
+          <h3>{{ s.name }}<h3>
+          <p>{{ s.major }}<p>
+            {% if s.startup %}
+              <p id="name">Startup: {{ s.startup }}</p>
+            {% elif s.research %}
+              <p id-"name">Research: {{ s.research }}</p>
+            {% elif s.company_id %}
+              <p id="name">Company: {{ s.company_id }}</p>
+            {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="2013">
+      <h2>CLASS OF 2013</h2>
+      {% for s in students.3 %}
+        <div class="each">
+          <h3>{{ s.name }}<h3>
+          <p>{{ s.major }}<p>
+            {% if s.startup %}
+              <p id="name">Startup: {{ s.startup }}</p>
+            {% elif s.research %}
+              <p id-"name">Research: {{ s.research }}</p>
+            {% elif s.company_id %}
+              <p id="name">Company: {{ s.company_id }}</p>
+            {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 
 {% endblock content %}

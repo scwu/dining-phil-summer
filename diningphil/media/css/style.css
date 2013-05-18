@@ -67,7 +67,7 @@ html, body {
 }
 .bubblechart{
   position: relative;
-  top: -30px;
+  top: 40px;
 }
 
 #states_map {
@@ -145,7 +145,7 @@ circle {
   min-width: 1400px;
   padding-top: 50px;
   background-color: #0099cc;
-  padding-bottom: 20px;
+  padding-bottom: 70px;
 }
 .size_by_class h1 {
   font-family: 'League Gothic', sans-serif;
@@ -159,7 +159,7 @@ circle {
 }
 .pie_chart .pie {
   position: relative;
-  top: -150px;
+  top: -40px;
 }
 .pie text {
   fill: white;
@@ -197,6 +197,12 @@ circle {
   position: relative;
   top: -20px;
 }
+.graph path.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+
 .map_bubble h1 {
   font-family: 'League Gothic', sans-serif;
   color: white;

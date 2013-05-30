@@ -89,6 +89,12 @@ html, body {
   color: white;
   font-size: 90px;
 }
+#states_map .legend span {
+   font-family: 'Open Sans', sans-serif;
+   font-weight: 400;
+   font-size: 15px;
+ }
+ 
 text, span {
     font-size: 17px;
     color: white;
@@ -180,7 +186,7 @@ circle {
 .industries .graph text {
   font-family: 'Open Sans', sans-serif;
   font-size: 18px;
-  fill: black;
+  fill: white;
   font-weight: 400;
 }
 .graph {

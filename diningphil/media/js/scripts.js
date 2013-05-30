@@ -52,6 +52,16 @@ function drawBubbles() {
 }
 
 function drawChange() {
+  var defaults = {
+    scaleShowLabels : true,
+    scaleLineColor : "rgba(255,255,255,1)",
+    scaleOverride : true,
+    scaleSteps : 10,
+    scaleStepWidth : 1,
+    scaleStartValue : 0,
+    scaleFontColor : "#FFFFFF",
+    scaleFontFamily : "'Open Sans'",
+  }
  var lineChartData = {
 			labels : ["Microsoft","Google","Facebook","Goldman Sachs","Palantir","Amazon","Research"],
 			datasets : [
@@ -73,7 +83,7 @@ function drawChange() {
 
 		}
 
-	var myLine = new Chart(document.getElementById("change_time").getContext("2d")).Line(lineChartData); 
+	var myLine = new Chart(document.getElementById("change_time").getContext("2d")).Line(lineChartData,defaults); 
 
 }
 
